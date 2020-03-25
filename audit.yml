@@ -1,0 +1,4100 @@
+---
+- name: audit test
+  hosts: all
+  tasks:
+   - name: "CHECK | SCORED | 1.1.1.1 | PATCH | Ensure mounting of cramfs filesystems is disabled"
+     command: "modprobe -n -v cramfs"
+     ignore_errors: yes
+     register: audit_1
+     tags: 
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.1
+      - cramfs
+   - debug:
+      var: audit_1.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.1
+      - cramfs
+
+   - name: "CHECK | SCORED | 1.1.1.2 | PATCH | Ensure mounting of freevxfs filesystems is disabled"
+     command: "modprobe -n -v freevxfs"
+     ignore_errors: yes
+     register: audit_2
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.2
+      - freevxfs
+   - debug:
+      var: audit_2.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.2
+      - freevxfs
+
+   - name: "CHECK | SCORED | 1.1.1.3 | PATCH | Ensure mounting of jffs2 filesystems is disabled"
+     command: "modprobe -n -v jffs2"
+     ignore_errors: yes
+     register: audit_3
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.3
+      - jffs2
+   - debug:
+      var: audit_3.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.3
+      - jffs2      
+
+   - name: "CHECK | SCORED | 1.1.1.4 | PATCH | Ensure mounting of hfs filesystems is disabled"
+     command: "modprobe -n -v hfs"
+     ignore_errors: yes
+     register: audit_4
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.4
+      - hfs
+   - debug:
+      var: audit_4.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.4
+      - hfs
+
+   - name: "CHECK | SCORED | 1.1.1.5 | PATCH | Ensure mounting of hfsplus filesystems is disabled"
+     command: "modprobe -n -v hfsplus"
+     ignore_errors: yes
+     register: audit_5
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.5
+      - hfsplus
+   - debug:
+      var: audit_5.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.5
+      - hfsplus
+
+   - name: "CHECK | SCORED | 1.1.1.6 | PATCH | Ensure mounting of squashfs filesystems is disabled"
+     command: "modprobe -n -v squashfs"
+     ignore_errors: yes
+     register: audit_6
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.6
+      - squashfs
+   - debug:
+      var: audit_6.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.6
+      - squashfs
+
+   - name: "CHECK | SCORED | 1.1.1.7 | PATCH | Ensure mounting of udf filesystems is disabled"
+     command: "modprobe -n -v udf"
+     ignore_errors: yes
+     register: audit_7
+     tags:
+      - level1
+      - scored
+      - patch
+      - 1.1.1.7
+      - udf
+   - debug:
+      var: audit_7.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.7
+      - udf
+
+   - name: "CHECK | SCORED | 1.1.1.8 | PATCH | Ensure mounting of FAT filesystems is disabled"
+     command: "modprobe -n -v vfat"
+     ignore_errors: yes
+     register: audit_8
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.8
+      - vfat
+   - debug:
+      var: audit_8.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.1.8
+      - vfat
+
+   - name: "CHECK | SCORED | 1.1.2 | PATCH | Ensure separate partition exists for /tmp\n
+            CHECK | SCORED | 1.1.3 | PATCH | Ensure nodev option set on /tmp partition\n
+            CHECK | SCORED | 1.1.4 | PATCH | Ensure nosuid option set on /tmp partition\n
+            CHECK | SCORED | 1.1.5 | PATCH | Ensure noexec option set on /tmp partition\n
+            | drop custom tmp.mount"
+     command: "grep 'tmpfs /tmp' /etc/fstab"
+     ignore_errors: yes
+     register: audit_9
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.2
+      - rule_1.1.3
+      - rule_1.1.4
+      - rule_1.1.5
+   - debug:
+      var: audit_9.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.2
+      - rule_1.1.3
+      - rule_1.1.4
+      - rule_1.1.5
+
+   - name: "CHECK | SCORED | 1.1.6 | PATCH | Ensure separate partition exists for /var"
+     command: "grep '/var--vg' /etc/fstab"
+     ignore_errors: yes
+     register: audit_10
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.6
+   - debug:
+      var: audit_10.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.6
+
+   - name: "CHECK | SCORED | 1.1.7 | PATCH | Ensure separate partition exists for /var/tmp\n
+            CHECK | SCORED | 1.1.8 | PATCH | Ensure nodev option set on /var/tmp partition\n
+            CHECK | SCORED | 1.1.9 | PATCH | Ensure nosuid option set on /var/tmp partition\n
+            CHECK | SCORED | 1.1.10 | PATCH | Ensure noexec option set on /var/tmp partition"
+     command: "grep /var/tmp /etc/fstab"
+     ignore_errors: yes
+     register: audit_11
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.7
+      - rule_1.1.8
+      - rule_1.1.9
+      - rule_1.1.10
+      - low
+   - debug:
+      var: audit_11.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.7
+      - rule_1.1.8
+      - rule_1.1.9
+      - rule_1.1.10
+      - low
+
+   - name: "CHECK | SCORED | 1.1.11 | PATCH | Ensure separate partition exists for /var/log"
+     command: "grep /var/log /etc/fstab"
+     ignore_errors: yes
+     register: audit_12
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.11
+   - debug:
+      var: audit_12.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.11
+
+   - name: "CHECK | SCORED | 1.1.12 | PATCH | Ensure separate partition exists for /var/log/audit"
+     command: "grep /var/log/audit /etc/fstab"
+     ignore_errors: yes
+     register: audit_13
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.12
+   - debug:
+      var: audit_13.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.12
+   
+   - name: "CHECK | SCORED | 1.1.13 | PATCH | Ensure separate partition exists for /home\n
+            CHECK | SCORED | 1.1.14 | PATCH | Ensure nodev option set on /home partition"
+     command: "grep /home /etc/fstab"
+     ignore_errors: yes
+     register: audit_14
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.1.13
+      - rule_1.1.14
+      - user_check
+   - debug:
+      var: audit_14.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - level2
+      - scored
+      - patch
+      - rule_1.1.13
+      - rule_1.1.14
+      - user_check
+
+   - name: "CHECK | SCORED | 1.1.15 | PATCH | Ensure nodev option set on /dev/shm partition\n
+            CHECK | SCORED | 1.1.16 | PATCH | Ensure nosuid option set on /dev/shm partition\n
+            CHECK | SCORED | 1.1.17 | PATCH | Ensure noexec option set on /dev/shm partition"
+     command: "grep /dev/shm /etc/fstab"
+     ignore_errors: yes
+     register: audit_15
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.15
+      - rule_1.1.16
+      - rule_1.1.17
+   - debug:
+      var: audit_15.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - 1.1.15
+      - 1.1.16
+      - rule_1.1.17
+
+   - name: "CHECK | SCORED | 1.1.21 | PATCH | Ensure sticky bit is set on all world-writable directories"
+     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
+     ignore_errors: yes
+     register: audit_16
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.21
+   - debug:
+      var: audit_16.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.21
+
+   - name: "CHECK | SCORED | 1.1.22 | PATCH | Disable Automounting"
+     shell: "systemctl show ntalk | grep LoadState | cut -d = -f 2"
+     ignore_errors: yes
+     register: audit_17
+     tags:
+      - level1
+      - scored
+      - patch
+      - 1.1.22
+   - debug:
+      var: audit_17.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.1.22
+
+   - name: "CHECK | NOTSCORED | 1.2.1 | PATCH | Ensure package manager repositories are configured"
+     shell: "yum repolist"
+     ignore_errors: yes
+     register: audit_18
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_1.2.1
+   - debug:
+      var: audit_18.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_1.2.1
+
+   - name: "CHECK | SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
+     shell: "grep ^gpgcheck /etc/yum.conf"
+     ignore_errors: yes
+     register: audit_19
+     tags:
+      - rule_1.2.2
+      - level1
+      - scored
+      - patch
+   - debug:
+      var: audit_19.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.2.2
+
+   - name: "CHECK | NOTSCORED | 1.2.3 | PATCH | Ensure GPG keys are configured"
+     shell: "rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'"
+     ignore_errors: yes
+     register: audit_20
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.2.3
+   - debug:
+      var: audit_20.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.2.3
+
+   - name: "CHECK | NOTSCORED | 1.2.5 | PATCH | Disable the rhnsd Daemon"
+     shell: "chkconfig --list rhnsd"
+     ignore_errors: yes
+     register: audit_21
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.2.5
+   - debug:
+      var: audit_21.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.2.5
+
+   - name: "CHECK | SCORED | 1.3.1 | PATCH | Ensure AIDE is installed"
+     shell: "rpm -q aide | grep aide"
+     ignore_errors: yes
+     register: audit_22
+     tags:
+      - level1
+      - scored
+      - aide
+      - patch
+      - rule_1.3.1
+   - debug:
+      var: audit_22.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - aide
+      - patch
+      - rule_1.3.1
+
+   - name: "CHECK | SCORED | 1.3.2 | PATCH | Ensure filesystem integrity is regularly checked"
+     shell: "crontab -u root -l | grep aide"
+     ignore_errors: yes
+     register: audit_23
+     tags:
+      - level1
+      - scored
+      - aide
+      - file_integrity
+      - patch
+      - rule_1.3.2
+   - debug:
+      var: audit_23.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - aide
+      - file_integrity
+      - patch
+      - rule_1.3.2
+
+   - name: "CHECK | SCORED | 1.3.2 | PATCH | Ensure filesystem integriry is regularly checked"
+     shell: "grep -r aide /etc/cron.* /etc/crontab"
+     ignore_errors: yes
+     register: audit_24
+     tags:
+      - level1
+      - scored
+      - aide
+      - file_integrity
+      - patch
+      - rule_1.3.2
+   - debug:
+      var: audit_24.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - aide
+      - file_integrity
+      - patch
+      - rule_1.3.2
+
+   - name: "CHECK | SCORED | 1.4.1 | PATCH | Ensure permissions on bootloader config are configured"
+     shell: "stat /boot/grub2/grub.cfg | grep root"
+     ignore_errors: yes
+     register: audit_25
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.1
+   - debug:
+      var: audit_25.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.1
+
+   - name: "CHECK | SCORED | 1.4.2 | PATCH | Ensure bootloader password is set"
+     shell: "grep 'superusers' /boot/grub2/grub.cfg"
+     ignore_errors: yes
+     register: audit_26
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.2
+   - debug:
+      var: audit_26.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.2
+
+   - name: "CHECK | SCORED | 1.4.2 | PATCH | Ensure bootloader password is set"
+     shell: "grep 'password' /boot/grub2/grub.cfg"
+     ignore_errors: yes
+     register: audit_27
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.2
+   - debug:
+      var: audit_27.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - grub
+      - patch
+      - rule_1.4.2
+
+   - name: "CHECK | NOTSCORED | 1.4.3 | PATCH | Ensure authentication required for single user mode"
+     shell: "grep /sbin/sulogin /usr/lib/systemd/system/rescue.service"
+     ignore_errors: yes
+     register: audit_28
+     tags:
+      - level2
+      - patch
+      - rule_1.4.3
+   - debug:
+      var: audit_28.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.4.3
+
+   - name: "CHECK | NOTSCORED | 1.4.3 | PATCH | Ensure authentication required for single user mode"
+     shell: "grep /sbin/sulogin /usr/lib/systemd/system/emergency.service"
+     ignore_errors: yes
+     register: audit_29
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.4.3
+   - debug:
+      var: audit_29.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.4.3
+
+   - name: "CHECK | SCORED | 1.5.1 | PATCH | Ensure core dumps are restricted"
+     shell: "grep 'hard    core' /etc/security/limits.conf"
+     ignore_errors: yes
+     register: audit_30
+     tags:
+      - level1
+      - scored
+      - limits
+      - patch
+      - rule_1.5.1
+   - debug:
+      var: audit_30.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - limits
+      - patch
+      - rule_1.5.1
+
+   - name: "CHECK | SCORED | 1.5.1 | PATCH | Ensure core dumps are restricted"
+     shell: "sysctl fs.suid_dumpable"
+     ignore_errors: yes
+     register: audit_31
+     tags:
+      - level1
+      - scored
+      - limits
+      - patch
+      - rule_1.5.1
+   - debug:
+      var: audit_31.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - limits
+      - patch
+      - rule_1.5.1
+
+   - name: "CHECK | NOTSCORED | 1.5.2 | PATCH | Ensure XD/NX support is enabled"
+     shell: "dmesg | grep NX"
+     ignore_errors: yes
+     register: audit_32
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.5.2
+   - debug:
+      var: audit_32.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - notscored
+      - patch
+      - rule_1.5.2
+
+   - name: "CHECK | SCORED | 1.5.3 | PATCH | Ensure address space layout randomization (ASLR) is enabled"
+     shell: "sysctl kernel.randomize_va_space"
+     ignore_errors: yes
+     register: audit_33
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.5.3
+   - debug:
+      var: audit_33.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.5.3
+
+   - name: "CHECK | SCORED | 1.5.4 | PATCH | Ensure prelink is disabled"
+     shell: "rpm -q prelink | grep package"
+     ignore_errors: yes
+     register: audit_34
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.5.4
+   - debug:
+      var: audit_34.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_1.5.4
+
+   - name: "CHECK | SCORED | 1.6.1.1 | PATCH | Ensure SELinux is not disabled in bootloader configuration"
+     shell: "grep 'GRUB_CMDLINE_LINUX' /etc/default/grub"
+     ignore_errors: yes
+     register: audit_35
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.1.1
+   - debug:
+      var: audit_35.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.1.1
+
+   - name: "CHECK | SCORED | 1.6.1.2 | PATCH | Ensure the SELinux state is enforcing"
+     shell: "grep SELINUX=enforcing /etc/selinux/config"
+     ignore_errors: yes
+     register: audit_36
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.2
+   - debug:
+      var: audit_36.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.2
+
+   - name: "CHECK | SCORED | 1.6.1.2 | PATCH | Ensure the SELinux state is enforcing"
+     shell: "sestatus | grep 'Current mode:'"
+     ignore_errors: yes
+     register: audit_37
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.2
+   - debug:
+      var: audit_37.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.2
+
+   - name: "CHECK | SCORED | 1.6.1.3 | PATCH | Ensure SELinux policy is configured"
+     shell: "grep SELINUXTYPE=targeted /etc/selinux/config"
+     ignore_errors: yes
+     register: audit_38
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.3
+   - debug:
+      var: audit_38.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.3
+
+   - name: "CHECK | SCORED | 1.6.1.3 | PATCH | Ensure SELinux policy is configured"
+     shell: "sestatus | grep 'Loaded policy name'"
+     ignore_errors: yes
+     register: audit_39
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.3
+   - debug:
+      var: audit_39.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.3
+
+   - name: "CHECK | SCORED | 1.6.1.4 | PATCH | Ensure SETroubleshoot is not installed"
+     shell: "rpm -q setroubleshoot | grep setroubleshoot"
+     ignore_errors: yes
+     register: audit_40
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.4
+   - debug:
+      var: audit_40.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - selinux
+      - patch
+      - rule_1.6.1.4
+
+   - name: "CHECK | SCORED | 1.6.1.5 | PATCH | Ensure the MCS Translation Service (mcstrans) is not installed"
+     shell: "rpm -q mcstrans | grep mcstrans"
+     ignore_errors: yes
+     register: audit_41
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.1.5
+   - debug:
+      var: audit_41.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.1.5
+
+   - name: "CHECK | SCORED | 1.6.2 | PATCH | Ensure SELinux is installed"
+     shell: "rpm -q libselinux | grep libselinux"
+     ignore_errors: yes
+     register: audit_42
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.2
+   - debug:
+      var: audit_42.stdout
+     ignore_errors: yes
+     tags:
+      - level2
+      - scored
+      - patch
+      - rule_1.6.2
+   
+   - name: "CHECK |SCORED | 1.7.1.1 | PATCH | Ensure message of the day is configured properly"
+     shell: "egrep '(\\v|\\r|\\m|\\s)' /etc/motd"
+     ignore_errors: yes
+     register: audit_43
+     tags:
+      - level1
+      - scored
+      - banner
+      - patch
+      - rule_1.7.1.1
+   - debug:
+      var: audit_43.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - banner
+      - patch
+      - rule_1.7.1.1
+   
+   - name: "CHECK | NOTSCORED | 1.7.1.2 | PATCH | Ensure local login warning banner is configured properly"
+     shell: "egrep '(\\v|\\r|\\m|\\s)' /etc/issue"
+     ignore_errors: yes
+     register: audit_44
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_1.7.1.2
+   - debug:
+      var: audit_44.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_1.7.1.2
+   
+   - name: "CHECK | NOTSCORED | 1.7.1.3 | PATCH | Ensure remote login warning banner is configured properly"
+     shell: "egrep '(\\v|\\r|\\m|\\s)' /etc/issue.net"
+     ignore_errors: yes
+     register: audit_45
+     tags:
+      - level1
+      - notscored
+      - banner
+      - patch
+      - rule_1.7.1.3
+   - debug:
+      var: audit_45.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - banner
+      - patch
+      - rule_1.7.1.3
+   
+   - name: "CHECK | NOTSCORED | 1.7.1.4 | PATCH | Ensure permissions on /etc/motd are configured"
+     shell: "stat /etc/motd | grep root"
+     ignore_errors: yes
+     register: audit_46
+     tags:
+      - level1
+      - notscored
+      - perms
+      - patch
+      - rule_1.7.1.4
+   - debug:
+      var: audit_46.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - perms
+      - patch
+      - rule_1.7.1.4
+   
+   - name: "CHECK | SCORED | 1.7.1.5 | PATCH | Ensure permissions on /etc/issue are configured"
+     shell: "stat /etc/issue | grep root"
+     ignore_errors: yes
+     register: audit_47
+     tags:
+      - level1
+      - scored
+      - perms
+      - patch
+      - rule_1.7.1.5
+   - debug:
+      var: audit_47.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - perms
+      - patch
+      - rule_1.7.1.5
+   
+   - name: "CHECK | NOTSCORED | 1.7.1.6 | PATCH | Ensure permissions on /etc/issue.net are configured"
+     shell: "stat /etc/issue.net | grep root"
+     ignore_errors: yes
+     register: audit_48
+     tags:
+      - level1
+      - notscored
+      - perms
+      - patch
+      - rule_1.7.1.6
+   - debug:
+      var: audit_48.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - perms
+      - patch
+      - rule_1.7.1.6
+
+   - name: "CHECK | SCORED | 2.1.1 | PATCH | Ensure chargen services are not enabled"
+     shell: "systemctl show chargen | grep LoadState"
+     ignore_errors: yes
+     register: audit_49
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.1
+   - debug:
+      var: audit_49.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.1
+   
+   - name: "CHECK |SCORED | 2.1.2 | PATCH | Ensure daytime services are not enabled"
+     shell: "systemctl show daytime | grep LoadState"
+     ignore_errors: yes
+     register: audit_50
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.2
+   - debug:
+      var: audit_50.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.2
+   
+   - name: "CHECK | SCORED | 2.1.3 | PATCH | Ensure discard services are not enabled"
+     shell: "systemctl show discard | grep LoadState"
+     ignore_errors: yes
+     register: audit_51
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.3
+   - debug:
+      var: audit_51.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.3
+   
+   - name: "CHECK | SCORED | 2.1.4 | PATCH | Ensure echo services are not enabled"
+     shell: "systemctl show echo | grep LoadState"
+     ignore_errors: yes
+     register: audit_52
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.4
+   - debug:
+      var: audit_52.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.4
+
+   - name: "CHECK | SCORED | 2.1.5 | PATCH | Ensure time services are not enabled"
+     shell: "systemctl show time | grep LoadState"
+     ignore_errors: yes
+     register: audit_53
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.5
+   - debug:
+      var: audit_53.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - services
+      - patch
+      - rule_2.1.5
+
+   - name: "CHECK | SCORED | 2.1.6 | PATCH | Ensure tftp server is not enabled"
+     shell: "systemctl show tftp | grep LoadState"
+     ignore_errors: yes
+     register: audit_54
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.1.6
+   - debug:
+      var: audit_54.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.1.6
+   
+   - name: "CHECK | SCORED | 2.1.7 | PATCH | Ensure xinetd is not enabled"
+     shell: "systemctl show xinetd | grep LoadState"
+     ignore_errors: yes
+     register: audit_55
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.1.7 
+   - debug:
+      var: audit_55.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.1.7 
+   
+   - name: "CHECK | NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use"
+     shell: "rpm -q chrony | grep chrony"
+     ignore_errors: yes
+     register: audit_56
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_2.2.1.1
+   - debug:
+      var: audit_56.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_2.2.1.1
+
+   - name: "SCORED | 2.2.1.3 | PATCH | Ensure chrony is configured"
+     shell: "grep '^server' /etc/chrony.conf"
+     ignore_errors: yes
+     register: audit_57
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.2.1.3
+   - debug:
+      var: audit_57.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.2.1.3
+   
+   - name: "CHECK | SCORED | 2.2.2 | PATCH | Ensure X Window System is not installed"
+     shell: "rpm -q xorg-x11 | grep xorg-x11"
+     ignore_errors: yes
+     register: audit_58
+     tags:
+      - level1
+      - scored
+      - xwindows
+      - patch
+      - rule_2.2.2
+   - debug:
+      var: audit_58.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - xwindows
+      - patch
+      - rule_2.2.2
+   
+   - name: "CHECK | SCORED | 2.2.3 | PATCH | Ensure Avahi Server is not enabled"
+     shell: "systemctl show avihi-daemon | grep LoadState"
+     ignore_errors: yes
+     register: audit_59
+     tags:
+      - leval1
+      - scored
+      - avahi
+      - services
+      - patch
+      - rule_2.2.3
+   - debug:
+      var: audit_59.stdout
+     ignore_errors: yes
+     tags:
+      - leval1
+      - scored
+      - avahi
+      - services
+      - patch
+      - rule_2.2.3
+
+   - name: "CHECK | SCORED | 2.2.4 | PATCH | Ensure CUPS is not enabled"
+     shell: "systemctl show cups | grep LoadState"
+     ignore_errors: yes
+     register: audit_60
+     tags:
+      - level1
+      - scored
+      - cups
+      - services
+      - patch
+      - rule_2.2.4
+   - debug:
+      var: audit_60.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - cups
+      - services
+      - patch
+      - rule_2.2.4
+   
+   - name: "CHECK | SCORED | 2.2.5 | PATCH | Ensure DHCP Server is not enabled"
+     shell: "systemctl show dhcpd | grep LoadState"
+     ignore_errors: yes
+     register: audit_61
+     tags:
+      - level1
+      - scored
+      - dhcpd
+      - services
+      - patch
+      - rule_2.2.5
+   - debug:
+      var: audit_61.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - dhcpd
+      - services
+      - patch
+      - rule_2.2.5
+
+   - name: "CHECK | SCORED | 2.2.6 | PATCH | Ensure LDAP server is not enabled"
+     shell: "systemctl show slapd | grep LoadState"
+     ignore_errors: yes
+     register: audit_62
+     tags:
+      - level1
+      - scored
+      - LDAP
+      - services
+      - patch
+      - rule_2.2.6
+   - debug:
+      var: audit_62.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - LDAP
+      - services
+      - patch
+      - rule_2.2.6
+   
+   - name: "CHECK | SCORED | 2.2.7 | PATCH | Ensure NFS and RPC are not enabled"
+     shell: "systemctl show nfs | grep LoadState"
+     ignore_errors: yes
+     register: audit_63
+     tags:
+      - level1
+      - scored
+      - nfs
+      - rpc
+      - services
+      - patch
+      - rule_2.2.7
+   - debug:
+      var: audit_63.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - nfs
+      - rpc
+      - services
+      - patch
+      - rule_2.2.7
+
+   - name: "CHECK | SCORED | 2.2.7 | PATCH | Ensure NFS and RPC are not enabled"
+     shell: "systemctl show rpcbind | grep LoadState"
+     ignore_errors: yes
+     register: audit_64
+     tags:
+      - level1
+      - scored
+      - nfs
+      - rpc
+      - services
+      - patch
+      - rule_2.2.7
+   - debug:
+      var: audit_64.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - nfs
+      - rpc
+      - services
+      - patch
+      - rule_2.2.7
+   
+   - name: "CHECK | SCORED | 2.2.8 | PATCH | Ensure DNS Server is not enabled"
+     shell: "systemctl show named | grep LoadState"
+     ignore_errors: yes
+     register: audit_65
+     tags:
+      - level1
+      - scored
+      - named
+      - services
+      - patch
+      - rule_2.2.8
+   - debug:
+      var: audit_65.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - named
+      - services
+      - patch
+      - rule_2.2.8
+
+   - name: "CHECK | SCORED | 2.2.9 | PATCH | Ensure FTP Server is not enabled"
+     shell: "systemctl show vsftpd | grep LoadState"
+     ignore_errors: yes
+     register: audit_66
+     tags:
+      - level1
+      - scored
+      - vsftpd
+      - services
+      - patch
+      - rule_2.2.9
+   - debug:
+      var: audit_66.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - vsftpd
+      - services
+      - patch
+      - rule_2.2.9
+
+   - name: "CHECK | SCORED | 2.2.10 | PATCH | Ensure HTTP server is not enabled"
+     shell: "systemctl show httpd | grep LoadState"
+     ignore_errors: yes
+     register: audit_67
+     tags:
+      - level1
+      - scored
+      - httpd
+      - services
+      - patch
+      - rule_2.2.10
+   - debug:
+      var: audit_67.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - httpd
+      - services
+      - patch
+      - rule_2.2.10
+
+   - name: "CHECK | SCORED | 2.2.11 | PATCH | Ensure IMAP and POP3 server is not enabled"
+     shell: "systemctl show dovecot | grep LoadState"
+     ignore_errors: yes
+     register: audit_68
+     tags:
+      - level1
+      - scored
+      - dovecot
+      - services
+      - patch
+      - rule_2.2.11
+   - debug:
+      var: audit_68.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - dovecot
+      - services
+      - patch
+      - rule_2.2.11
+
+   - name: "CHECK | SCORED | 2.2.12 | PATCH | Ensure Samba is not enabled"
+     shell: "systemctl show smb | grep LoadState"
+     ignore_errors: yes
+     register: audit_69
+     tags:
+      - level1
+      - scored
+      - Samba
+      - services
+      - patch
+      - rule_2.2.12
+   - debug:
+      var: audit_69.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - Samba
+      - services
+      - patch
+      - rule_2.2.12
+   
+   - name: "CHECK |SCORED | 2.2.13 | PATCH | Ensure HTTP Proxy Server is not enabled"
+     shell: "systemctl show squid | grep LoadState"
+     ignore_errors: yes
+     register: audit_70
+     tags:
+      - level1
+      - scored
+      - squid
+      - services
+      - patch
+      - rule_2.2.13
+   - debug:
+      var: audit_70.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - squid
+      - services
+      - patch
+      - rule_2.2.13
+   
+   - name: "CHECK | SCORED | 2.2.14 | PATCH | Ensure SNMP Server is not enabled"
+     shell: "systemctl show snmpd | grep LoadState"
+     ignore_errors: yes
+     register: audit_71
+     tags:
+      - level1
+      - scored
+      - SNMP
+      - services
+      - patch
+      - rule_2.2.14
+   - debug:
+      var: audit_71.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - SNMP
+      - services
+      - patch
+      - rule_2.2.14
+
+   - name: "CHECK | SCORED | 2.2.15 | PATCH | Ensure mail transfer agent is configured for local-only mode"
+     shell: "netstat -an | grep LIST | grep ':25[[:space:]]'"
+     ignore_errors: yes
+     register: audit_72
+     tags:
+      - level1
+      - scored
+      - patch
+      - 2.2.15
+   - debug:
+      var: audit_72.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_2.2.15
+
+   - name: "SCORED | 2.2.16 | PATCH | Ensure NIS Server is not enabled"
+     shell: "systemctl show ypserv | grep LoadState"
+     ignore_errors: yes
+     register: audit_73
+     tags:
+      - level1
+      - scored
+      - NIS
+      - services
+      - patch
+      - rule_2.2.16
+   - debug:
+      var: audit_73.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - NIS
+      - services
+      - patch
+      - rule_2.2.16
+   
+   - name: "CHECK | SCORED | 2.2.17 | PATCH | Ensure rsh server is not enabled | rsh"
+     shell: "systemctl show rsh.socket | grep LoadState"
+     ignore_errors: yes
+     register: audit_74
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17
+   - debug:
+      var: audit_74.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17
+   
+   - name: "CHECK | SCORED | 2.2.17 | PATCH | Ensure rsh server is not enabled | rlogin"
+     shell: "systemctl show rlogin.socket | grep LoadState"
+     ignore_errors: yes
+     register: audit_75
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17
+   - debug:
+      var: audit_75.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17 
+   
+   - name: "CHECK | SCORED | 2.2.17 | PATCH | Ensure rsh server is not enabled | rexec"
+     shell: "systemctl show rexec.socket | grep LoadState"
+     ignore_errors: yes
+     register: audit_76
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17
+   - debug:
+      var: audit_76.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.2.17
+
+   - name: "CHECK | SCORED | 2.2.18 | PATCH | Ensure telnet server is not enabled"
+     shell: "systemctl show telnet | grep LoadState"
+     ignore_errors: yes
+     register: audit_77
+     tags:
+      - level1
+      - scored
+      - telnet
+      - services
+      - patch
+      - rule_2.2.18
+   - debug:
+      var: audit_77.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - telnet
+      - services
+      - patch
+      - rule_2.2.18
+
+   - name: "CHECK | SCORED | 2.2.19 | PATCH | Ensure tftp server is not enabled"    
+     shell: "systemctl show tftp | grep LoadState"
+     ignore_errors: yes
+     register: audit_78
+     tags:
+      - level1
+      - scored
+      - tftp
+      - services
+      - patch
+      - rule_2.2.19
+   - debug:
+      var: audit_78.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - tftp
+      - services
+      - patch
+      - rule_2.2.19
+   
+   - name: "CHECK | SCORED | 2.2.20 | PATCH | Ensure rsync service is not enabled "
+     shell: "systemctl show rsyncd | grep LoadState"
+     ignore_errors: yes
+     register: audit_79
+     tags:
+      - level1
+      - scored
+      - rsync
+      - services
+      - patch
+      - rule_2.2.19 
+   - debug:
+      var: audit_79.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - rsync
+      - services
+      - patch
+      - rule_2.2.19
+
+   - name: "CHECK | SCORED | 2.2.21 | PATCH | Ensure talk server is not enabled"
+     shell: "systemctl show ntalk | grep LoadState"    
+     ignore_errors: yes
+     register: audit_80
+     tags:
+      - level1
+      - scored
+      - talk
+      - services
+      - patch
+      - rule_2.2.21
+   - debug:
+      var: audit_80.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - talk
+      - services
+      - patch
+      - rule_2.2.21
+   
+   - name: "CHECK | SCORED | 2.3.1 | PATCH | Ensure NIS Client is not installed"
+     shell: "rpm -q ypbind | grep ypbind"
+     ignore_errors: yes
+     register: audit_81
+     tags:
+      - level1
+      - scored
+      - NIS
+      - services
+      - patch
+      - rule_2.3.1
+   - debug:
+      var: audit_81.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - NIS
+      - services
+      - patch
+      - rule_2.3.1
+   
+   - name: "CHECK |SCORED | 2.3.2 | PATCH | Ensure rsh client is not installed"
+     shell: "rpm -q rsh | grep rsh"
+     ignore_errors: yes
+     register: audit_82
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.3.2
+   - debug:
+      var: audit_82.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - rsh
+      - services
+      - patch
+      - rule_2.3.2
+   
+   - name: "CHECK | SCORED | 2.3.3 | PATCH | Ensure talk client is not installed"
+     shell: "rpm -q talk | grep talk"
+     ignore_errors: yes
+     register: audit_83
+     tags:
+      - level1
+      - scored
+      - talk
+      - services
+      - patch
+      - rule_2.3.3
+   - debug:
+      var: audit_83.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - talk
+      - services
+      - patch
+      - rule_2.3.3
+   - name: "CHECK | SCORED | 2.3.4 | PATCH | Ensure telnet client is not installed"
+     shell: "rpm -q telnet | grep telnet"
+     ignore_errors: yes
+     register: audit_84
+     tags:
+      - level1
+      - scored
+      - telnet
+      - services
+      - patch
+      - rule_2.3.4
+   - debug:
+      var: audit_84.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - telnet
+      - services
+      - patch
+      - rule_2.3.4
+   
+   - name: "CHECK | SCORED | 2.3.5 | PATCH | Ensure LDAP client is not installed"
+     shell: "rpm -q openldap-clients | grep openldap-clients"
+     ignore_errors: yes
+     register: audit_85
+     tags:
+      - level1
+      - scored
+      - LDAP
+      - services
+      - patch
+      - rule_2.3.5
+   - debug:
+      var: audit_85.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - LDAP
+      - services
+      - patch
+      - rule_2.3.5
+   
+   - name: "CHECK | SCORED | 3.1.1 | PATCH | Ensure IP forwarding is disabled"
+     shell: "grep 'net.ipv4.ip_forward' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_86
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.1
+   - debug:
+      var: audit_86.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.1
+   
+   - name: "CHECK | SCORED | 3.1.2 | PATCH | Ensure packet redirect sending is disabled"
+     shell: "grep 'net.ipv4.conf.all.send_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_87
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.2
+   - debug:
+      var: audit_87.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.2
+   
+   - name: "CHECK | SCORED | 3.1.2 | PATCH | Ensure packet redirect sending is disabled"
+     shell: "grep 'net.ipv4.conf.default.send_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_88
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.2
+   - debug:
+      var: audit_88.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.1.2
+
+   - name: "CHECK | SCORED | 3.2.1 | PATCH | Ensure source routed packets are not accepted"     
+     shell: "grep 'net.ipv4.conf.all.accept_source_route' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_89
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.1
+   - debug:
+      var: audit_89.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.1
+   
+   - name: "CHECK | SCORED | 3.2.1 | PATCH | Ensure source routed packets are not accepted"
+     shell: "grep 'net.ipv4.conf.default.accept_source_route' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_90
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.1
+   - debug:
+      var: audit_90.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.1
+
+   - name: "CHECK | SCORED | 3.2.2 | PATCH | Ensure ICMP redirects are not accepted"
+     shell: "grep 'net.ipv4.conf.all.accept_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_91
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.2
+   - debug:
+      var: audit_91.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.2
+
+   - name: "CHECK | SCORED | 3.2.2 | PATCH | Ensure ICMP redirects are not accepted"
+     shell: "grep 'net.ipv4.conf.default.accept_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_92
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.2
+   - debug:
+      var: audit_92.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.2 
+
+   - name: "CHECK | SCORED | 3.2.3 | PATCH | Ensure secure ICMP redirects are not accepted"
+     shell: "grep 'net.ipv4.conf.all.secure_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_93
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.3
+   - debug:
+      var: audit_93.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.3
+   
+   - name: "CHECK | SCORED | 3.2.3 | PATCH | Ensure secure ICMP redirects are not accepted"
+     shell: "grep 'net.ipv4.conf.default.secure_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_94
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.3
+   - debug:
+      var: audit_94.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.3
+   
+   - name: "CHECK | SCORED | 3.2.4 | PATCH | Ensure suspicious packets are logged"
+     shell: "grep 'net.ipv4.conf.all.log_martians' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_95
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.4
+   - debug:
+      var: audit_95.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.4
+
+   - name: "CHECK | SCORED | 3.2.4 | PATCH | Ensure suspicious packets are logged"
+     shell: "grep 'net.ipv4.conf.default.log_martians' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_96
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.4
+   - debug:
+      var: audit_96.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.4
+   
+   - name: "CHECK | SCORED | 3.2.5 | PATCH | Ensure broadcast ICMP requests are ignored"
+     shell: "grep 'net.ipv4.icmp_echo_ignore_broadcasts' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_97
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.5
+   - debug:
+      var: audit_97.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.5
+   
+   - name: "CHECK | SCORED | 3.2.6 | PATCH | Ensure bogus ICMP responses are ignored"
+     shell: "grep 'net.ipv4.icmp_ignore_bogus_error_responses' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_98
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.6
+   - debug:
+      var: audit_98.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.6
+
+   - name: "CHECK | SCORED | 3.2.7 | PATCH | Ensure Reverse Path Filtering is enabled"
+     shell: "grep 'net.ipv4.conf.all.rp_filter' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_99
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.7
+   - debug: 
+      var: audit_99.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.7
+
+   - name: "CHECK | SCORED | 3.2.7 | PATCH | Ensure Reverse Path Filtering is enabled"
+     shell: "grep 'net.ipv4.conf.default.rp_filter' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_100
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.7
+   - debug: 
+      var: audit_100.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.7
+   
+   - name: "CHECK | SCORED | 3.2.8 | PATCH | Ensure TCP SYN Cookies is enabled"
+     shell: "grep 'net.ipv4.tcp_syncookies' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_101
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.8
+   - debug:
+      var: audit_101.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.2.8
+   
+   - name: "CHECK | SCORED | 3.3.1 | PATCH | Ensure IPv6 router advertisements are not accepted"
+     shell: "grep 'net.ipv6.conf.all.accept_ra' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_102
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.1
+   - debug:
+      var: audit_102.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.1
+
+   - name: "CHECK | SCORED | 3.3.1 | PATCH | Ensure IPv6 router advertisements are not accepted"
+     shell: "grep 'net.ipv6.conf.default.accept_ra' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_103
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.1
+   - debug:
+      var: audit_103.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.1
+
+   - name: "CHECK | SCORED | 3.3.2 | PATCH | Ensure IPv6 redirects are not accepted"
+     shell: "grep 'net.ipv6.conf.all.accept_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_105
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.2
+   - debug:
+      var: audit_105.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.2
+
+   - name: "CHECK | SCORED | 3.3.2 | PATCH | Ensure IPv6 redirects are not accepted"
+     shell: "grep 'net.ipv6.conf.default.accept_redirects' /etc/sysctl.conf"
+     ignore_errors: yes
+     register: audit_106
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.2
+   - debug:
+      var: audit_106.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.3.2
+
+   - name: "CHECK | NOTSCORED | 3.3.3 | PATCH | Ensure IPv6 is disabled"
+     shell: "grep 'ipv6' /etc/default/grub"
+     ignore_errors: yes
+     register: audit_107
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.3.3
+   - debug:
+      var: audit_107.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.3.3
+
+   - name: "CHECK | SCORED | 3.4.1 | PATCH | Ensure TCP Wrappers is installed"
+     shell: "rpm -q tcp_wrappers | grep tcp_wrappers"
+     ignore_errors: yes
+     register: audit_108
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.1
+   - debug:
+      var: audit_108.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.1
+
+   - name: "CHECK | SCORED | 3.4.2 | PATCH | Ensure /etc/hosts.allow is configured"
+     shell: "grep 'ALL' /etc/hosts.allow"
+     ignore_errors: yes
+     register: audit_109
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.2
+   - debug:
+      var: audit_109.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.2
+
+   - name: "CHECK | SCORED | 3.4.3 | PATCH | Ensure /etc/hosts.deny is configured"
+     shell: "grep 'ALL' /etc/hosts.deny"
+     ignore_errors: yes
+     register: audit_110
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.3
+   - debug:
+      var: audit_110.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.3
+   
+   - name: "CHECK | SCORED | 3.4.4 | PATCH | Ensure permissions on /etc/hosts.allow are configured"
+     shell: "stat /etc/hosts.allow | grep root"
+     ignore_errors: yes
+     register: audit_111
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.4
+   - debug:
+      var: audit_111.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.4
+   
+   - name: "CHECK | SCORED | 3.4.5 | PATCH | Ensure permissions on /etc/hosts.deny are 644"
+     shell: "stat /etc/hosts.deny | grep root"
+     ignore_errors: yes
+     register: audit_112
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.5
+   - debug:
+      var: audit_112.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.4.5
+   
+   - name: "CHECK | NOTSCORED | 3.5.1 | PATCH | Ensure DCCP is disabled"
+     shell: "modprobe -n -v dccp"
+     ignore_errors: yes
+     register: audit_113
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.5.1
+   - debug:
+      var: audit_113.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - scored
+      - patch
+      - rule_3.5.1
+   
+   - name: "CHECK | NOTSCORED | 3.5.2 | PATCH | Ensure SCTP is disabled"
+     shell: "modprobe -n -v sctp"
+     ignore_errors: yes
+     register: audit_114
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.2
+   - debug:
+      var: audit_114.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.2
+   
+   - name: "CHECK | NOTSCORED | 3.5.3 | PATCH | Ensure RDS is disabled"
+     shell: "modprobe -n -v rds"
+     ignore_errors: yes
+     register: audit_115
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.3
+   - debug:
+      var: audit_115.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.3
+
+   - name: "CHECK | NOTSCORED | 3.5.4 | PATCH | Ensure TIPC is disabled"
+     shell: "modprobe -n -v tipc"
+     ignore_errors: yes
+     register: audit_116
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.4
+   - debug:
+      var: audit_116.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - sysctl
+      - notscored
+      - patch
+      - rule_3.5.4
+
+   - name: "CHECK | SCORED | 3.6 | PATCH | Ensure firewalld is installed and started | Install firewalld"
+     shell: "rpm -q firewalld | grep firewalld"
+     ignore_errors: yes
+     register: audit_117
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.6
+   - debug:
+      var: audit_117.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.6
+
+   - name: "CHECK | SCORED | 3.6 | PATCH | Ensure firewalld is installed and started | Start firewalld service"
+     shell: "systemctl status firewalld | grep Active"
+     ignore_errors: yes
+     register: audit_118
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.6
+   - debug:
+      var: audit_118.stdout
+     ignore_errors: yes
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.6
+
+   - name: "CHECK | NOTSCORED | 3.7 | PATCH | Ensure wireless interfaces are disabled"
+     shell: "ip link show up"
+     ignore_errors: yes
+     register: audit_119
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.7
+   - debug:
+      var: audit_119.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - firewalld
+      - scored
+      - patch
+      - rule_3.7
+
+   - name: "CHECK | NOTSCORED | 4.1.1.1 | PATCH | Ensure audit log storage size is configured"
+     shell: "grep max_log_file /etc/audit/auditd.conf"
+     ignore_errors: yes
+     register: audit_120
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.1
+   - debug:
+      var: audit_120.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.1
+   
+   - name: "CHECK | SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+     shell: "grep '^space_left_action' /etc/audit/auditd.conf"
+     ignore_errors: yes
+     register: audit_121
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+   - debug:
+      var: audit_121.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+
+   - name: "CHECK | SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+     shell: "grep '^action_mail_acct' /etc/audit/auditd.conf"
+     ignore_errors: yes
+     register: audit_122
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+   - debug:
+      var: audit_122.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+
+   - name: "CHECK | SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+     shell: "grep '^admin_space_left_action' /etc/audit/auditd.conf"
+     ignore_errors: yes
+     register: audit_123
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+   - debug:
+      var: audit_123.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.2
+
+   - name: "CHECK | SCORED | 4.1.1.3 | PATCH | Ensure audit logs are not automatically deleted"
+     shell: "grep '^max_log_file_action' /etc/audit/auditd.conf"
+     ignore_errors: yes
+     register: audit_124
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.3
+   - debug:
+      var: audit_124
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.1.3
+
+   - name: "CHECK | SCORED | 4.1.2 | PATCH | Ensure auditd service is enabled"
+     shell: "systemctl is-enabled auditd"
+     ignore_errors: yes
+     register: audit_125
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.2
+   - debug:
+      var: audit_125.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.2
+
+   - name: "CHECK | SCORED | 4.1.3 | PATCH | Ensure auditing for processes that start prior to auditd is enabled"
+     shell: "grep 'audit' /boot/grub2/grub.cfg"
+     ignore_errors: yes
+     register: audit_126
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.3
+   - debug:
+      var: audit_126.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.3
+
+   - name: "CHECK | SCORED | 4.1.4 | PATCH | Ensure events that modify date and time information are collected"
+     shell: "grep time-change /etc/audit/rules.d/rhel7cis_rule_4_1_4.rules"
+     ignore_errors: yes
+     register: audit_127
+     tags:
+      - level2
+      - audit
+      - scored
+      - patch
+      - rule_4.1.4
+   - debug:
+      var: audit_127.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.4
+   
+   - name: "CHECK | SCORED | 4.1.5 | PATCH | Ensure events that modify user/group information are collected"
+     shell: "grep identity /etc/audit/rules.d/rhel7cis_rule_4_1_5.rules"
+     ignore_errors: yes
+     register: audit_128
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.5
+   - debug:
+      var: audit_128.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.5
+
+   - name: "CHECK | SCORED | 4.1.6 | PATCH | Ensure events that modify the system's network environment are collected"
+     shell: "grep system-locale /etc/audit/rules.d/rhel7cis_rule_4_1_6.rules"
+     ignore_errors: yes
+     register: audit_129
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.6
+   - debug:
+      var: audit_129.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.6
+   
+   - name: "CHECK | SCORED | 4.1.7 | PATCH | Ensure events that modify the system's Mandatory Access Controls are collected"
+     shell: "grep MAC-policy /etc/audit/rules.d/rhel7cis_rule_4_1_7.rules"
+     ignore_errors: yes
+     register: audit_130
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.7
+   - debug:
+      var: audit_130.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.7
+   
+   - name: "CHECK | SCORED | 4.1.8 | PATCH | Ensure login and logout events are collected"
+     shell: "grep logins /etc/audit/rules.d/rhel7cis_rule_4_1_8.rules"
+     register: audit_131
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.8
+   - debug:
+      var: audit_131.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.8
+
+   - name: "CHECK | SCORED | 4.1.9 | PATCH | Ensure session initiation information is collected"
+     shell: "grep session /etc/audit/rules.d/rhel7cis_rule_4_1_9.rules"
+     ignore_errors: yes
+     register: audit_132
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.9
+   - debug:
+      var: audit_132.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.9
+
+   - name: "CHECK | SCORED | 4.1.10 | PATCH | Ensure discretionary access control permission modification events are collected"
+     shell: "grep perm_mod /etc/audit/rules.d/rhel7cis_rule_4_1_10.rules"
+     ignore_errors: yes
+     register: audit_133
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.10
+   - debug:
+      var: audit_133.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.10
+
+   - name: "CHECK | SCORED | 4.1.11 | PATCH | Ensure unsuccessful unauthorized file access attempts are collected"
+     shell: "grep access /etc/audit/rules.d/rhel7cis_rule_4_1_11.rules"
+     ignore_errors: yes
+     register: audit_134
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.11
+   - debug:
+      var: audit_134.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.11
+   
+   - name: "CHECK | SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected"
+     shell: "grep privileged /etc/audit/rules.d/rhel7cis_rule_4_1_12.rules"
+     ignore_errors: yes
+     register: audit_135
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.12
+   - debug:
+      var: audit_135.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.12
+   
+   - name: "CHECK | SCORED | 4.1.13 | PATCH | Ensure successful file system mounts are collected"
+     shell: "grep mounts /etc/audit/rules.d/rhel7cis_rule_4_1_13.rules"
+     ignore_errors: yes
+     register: audit_136
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.13
+   - debug:
+      var: audit_136.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.13
+
+   - name: "CHECK | SCORED | 4.1.14 | PATCH | Ensure file deletion events by users are collected"
+     shell: "grep delete /etc/audit/rules.d/rhel7cis_rule_4_1_14.rules"
+     ignore_errors: yes
+     register: audit_137
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.14
+   - debug:
+      var: audit_137.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.14
+
+   - name: "CHECK | SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected"
+     shell: "grep scope /etc/audit/rules.d/rhel7cis_rule_4_1_15.rules"
+     ignore_errors: yes
+     register: audit_138
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.15
+   - debug:
+      var: audit_138.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.15
+   
+   - name: "CHECK | SCORED | 4.1.16 | PATCH | Ensure system administrator actions (sudolog) are collected"
+     shell: "grep actions /etc/audit/rules.d/rhel7cis_rule_4_1_16.rules"
+     ignore_errors: yes
+     register: audit_139
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.16
+   - debug:
+      var: audit_139.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.16
+
+   - name: "CHECK | SCORED | 4.1.17 | PATCH | Ensure kernel module loading and unloading is collected"
+     shell: "grep modules /etc/audit/rules.d/rhel7cis_rule_4_1_17.rules"
+     ignore_errors: yes
+     register: audit_140
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.17
+   - debug:
+      var: audit_140.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.17
+   
+   - name: "CHECK | SCORED | 4.1.18 | PATCH | Ensure the audit configuration is immutable"
+     shell: "grep 'e' /etc/audit/rules.d/rhel7cis_rule_4_1_18.rules"
+     ignore_errors: yes
+     register: audit_141
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.18
+   - debug:
+      var: audit_141.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level2
+      - auditd
+      - scored
+      - patch
+      - rule_4.1.18
+   
+   - name: "CHECK | SCORED | 4.2.3 | PATCH | Ensure rsyslog or syslog-ng is installed | rsyslog"
+     shell: "rpm -q rsyslog"
+     ignore_errors: yes
+     register: audit_142
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.3
+   - debug:
+      var: audit_142.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.3
+
+   - name: "CHECK | SCORED | 4.2.3 | PATCH | Ensure rsyslog or syslog-ng is installed | syslog-ng"
+     shell: "rpm -q syslog-ng"
+     ignore_errors: yes
+     register: audit_143
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.3
+   - debug:
+      var: audit_143.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.3
+
+   - name: "CHECK | SCORED | 4.2.1.1 | PATCH | Ensure rsyslog Service is enabled"
+     shell: "systemctl is-enabled rsyslog"
+     ignore_errors: yes
+     register: audit_144
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.1
+   - debug:
+      var: audit_144.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.1
+
+   - name: "CHECK | NOTSCORED | 4.2.1.2 | PATCH | Ensure logging is configured"
+     shell: "ls -l /var/log/"
+     ignore_errors: yes
+     register: audit_145
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.2
+   - debug:
+      var: audit_145.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.2
+   
+   - name: "CHECK | SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
+     shell: "grep FileCreateMode /etc/rsyslog.conf"
+     ignore_errors: yes
+     register: audit_146
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.3
+   - debug:
+      var: audit_146.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.3
+
+   - name: "CHECK | SCORED | 4.2.1.4 | PATCH | Ensure rsyslog is configured to send logs to a remote log host"
+     shell: "grep '*.*[^I][^I]*@' /etc/rsyslog.conf"
+     ignore_errors: yes
+     register: audit_147
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.4
+   - debug:
+      var: audit_147.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.1.4
+
+   - name: "CHECK | NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts."
+     shell: "grep '$InputTCPServerRun' /etc/rsyslog.conf"
+     ignore_errors: yes
+     register: audit_148
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.1.5
+   - debug:
+      var: audit_148.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.1.5
+   
+   - name: "CHECK | SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled"
+     shell: "systemctl show syslog-ng | grep LoadState"
+     ignore_errors: yes
+     register: audit_149
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.2.1
+   - debug:
+      var: audit_149.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.2.1
+
+   - name: "CHECK | NOTSCORED | 4.2.2.2 | PATCH | Ensure logging is configured"
+     shell: "ls -l /var/log/"
+     ignore_errors: yes
+     register: audit_150
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.2
+   - debug:
+      var: audit_150.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.2
+   
+   - name: "CHECK | SCORED | 4.2.2.3 | PATCH | Ensure syslog-ng default file permissions configured"
+     shell: "grep ^options /etc/syslog-ng/syslog-ng.conf"
+     ignore_errors: yes
+     register: audit_151
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.2.3
+   - debug:
+      var: audit_151.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.2.3
+   
+   - name: "CHECK | NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host"
+     shell: "grep 'destination logserver' /etc/syslog-ng/syslog-ng.conf"
+     ignore_errors: yes
+     register: audit_152
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.4
+   - debug:
+      var: audit_152.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.4
+
+   - name: "CHECK | NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
+     shell: "grep 'source net' /etc/syslog-ng/syslog-ng.conf"
+     ignore_errors: yes
+     register: audit_153
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+   - debug:
+      var: audit_153.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+
+   - name: "CHECK | NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
+     shell: "grep 'destination remote' /etc/syslog-ng/syslog-ng.conf"
+     ignore_errors: yes
+     register: audit_154
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+   - debug:
+      var: audit_154.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+
+   - name: "CHECK | NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
+     shell: "grep 'log { source(net)' /etc/syslog-ng/syslog-ng.conf"
+     ignore_errors: yes
+     register: audit_155
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+   - debug:
+      var: audit_155.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.2.2.5
+
+   - name: "CHECK | SCORED | 4.2.4 | PATCH | Ensure permissions on all logfiles are configured"
+     shell: "find /var/log -type f -ls"
+     ignore_errors: yes
+     register: audit_156
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.4
+   - debug:
+      var: audit_156.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_4.2.4
+
+   - name: "CHECK | NOTSCORED | 4.3 | PATCH | Ensure logrotate is configured"
+     shell: "grep daily /etc/logrotate.conf"
+     ignore_errors: yes
+     register: audit_157
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.3
+   - debug:
+      var: audit_157.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - notscored
+      - patch
+      - rule_4.3
+
+   - name: "CHECK | SCORED | 5.1.1 | PATCH | Ensure cron daemon is enabled"
+     shell: "systemctl is-enabled crond"
+     ignore_errors: yes
+     register: audit_158
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.1
+   - debug:
+      var: audit_158.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.1
+
+   - name: "CHECK | SCORED | 5.1.2 | PATCH | Ensure permissions on /etc/crontab are configured"
+     shell: "stat /etc/crontab | grep root"
+     ignore_errors: yes
+     register: audit_159
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.2
+   - debug:
+      var: audit_159.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.2
+   
+   - name: "CHECK | SCORED | 5.1.3 | PATCH | Ensure permissions on /etc/cron.hourly are configured"
+     shell: "stat /etc/cron.hourly | grep root"
+     ignore_errors: yes
+     register: audit_160
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.3
+   - debug:
+      var: audit_160.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.3
+
+   - name: "CHECK | SCORED | 5.1.4 | PATCH | Ensure permissions on /etc/cron.daily are configured"
+     shell: "stat /etc/cron.daily | grep root"
+     ignore_errors: yes
+     register: audit_161
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.4
+   - debug:
+      var: audit_161.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.4
+
+   - name: "CHECK | SCORED | 5.1.5 | PATCH | Ensure permissions on /etc/cron.weekly are configured"
+     shell: "stat /etc/cron.weekly | grep root"
+     ignore_errors: yes
+     register: audit_162
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.5
+   - debug:
+      var: audit_162
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.5
+   
+   - name: "CHECK | SCORED | 5.1.6 | PATCH | Ensure permissions on /etc/cron.monthly are configured"
+     shell: "stat /etc/cron.monthly | grep root"
+     ignore_errors: yes
+     register: audit_163
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.6
+   - debug:
+      var: audit_163.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.6
+   
+   - name: "CHECK | SCORED | 5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured"
+     shell: "stat /etc/cron.d | grep root"
+     ignore_errors: yes
+     register: audit_164
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.7
+   - debug:
+      var: audit_164.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.7
+   
+   - name: "CHECK | SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+     shell: "ls /etc/cron.*"
+     ignore_errors: yes
+     register: audit_165
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.8
+   - debug:
+      var: audit_165.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.8
+
+   - name: "CHECK | SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+     shell: "ls /etc/at.*"
+     ignore_errors: yes
+     register: audit_166
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.8
+   - debug:
+      var: audit_166.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.1.8
+
+   - name: "CHECK | SCORED | 5.2.1 | PATCH | Ensure permissions on /etc/ssh/sshd_config are configured"
+     shell: "stat /etc/ssh/sshd_config | grep root"
+     ignore_errors: yes
+     register: audit_167
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.1
+   - debug:
+      var: audit_167.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.1
+
+   - name: "CHECK | SCORED | 5.2.2 | PATCH | Ensure SSH Protocol is set to 2"
+     shell: "grep '^Protocol' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_168
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.2
+   - debug:
+      var: audit_168.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.2
+   
+   - name: "CHECK | SCORED | 5.2.3 | PATCH | Ensure SSH LogLevel is set to INFO"
+     shell: "grep '^LogLevel' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_169
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.3
+   - debug:
+      var: audit_169.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.3
+
+   - name: "CHECK | SCORED | 5.2.4 | PATCH | Ensure SSH X11 forwarding is disabled"
+     shell: "grep '^X11Forwarding' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_170
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.4
+   - debug:
+      var: audit_170.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.4
+   
+   - name: "CHECK | SCORED | 5.2.5 | PATCH | Ensure SSH MaxAuthTries is set to 4 or less"
+     shell: "grep '^MaxAuthTries' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_171
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.5
+   - debug:
+      var: audit_171.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.5
+
+   - name: "CHECK | SCORED | 5.2.6 | PATCH | Ensure SSH IgnoreRhosts is enabled"
+     shell: "grep '^IgnoreRhosts' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_172
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.6
+   - debug:
+      var: audit_172.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.6
+
+   - name: "CHECK | SCORED | 5.2.7 | PATCH | Ensure SSH HostbasedAuthentication is disabled"
+     shell: "grep '^HostbasedAuthentication' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_173
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.7
+   - debug:
+      var: audit_173.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.7
+
+   - name: "CHECK | SCORED | 5.2.8 | PATCH | Ensure SSH root login is disabled"
+     shell: "grep '^PermitRootLogin' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_174
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.8
+   - debug:
+      var: audit_174.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.8
+   
+   - name: "CHECK | SCORED | 5.2.9 | PATCH | Ensure SSH PermitEmptyPasswords is disabled"
+     shell: "grep '^PermitEmptyPasswords' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_175
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.9
+   - debug:
+      var: audit_175.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.9
+
+   - name: "CHECK | SCORED | 5.2.10 | PATCH | Ensure SSH PermitUserEnvironment is disabled"
+     shell: "grep PermitUserEnvironment /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_176
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.10
+   - debug:
+      var: audit_176.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.10
+   
+   - name: "CHECK | SCORED | 5.2.11 | PATCH | Ensure only approved ciphers are used"
+     shell: "grep 'Ciphers' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_177
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.11
+   - debug:
+      var: audit_177.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.11
+   
+   - name: "CHECK | SCORED | 5.2.12 | PATCH | Ensure only approved MAC algorithms are used"
+     shell: "grep 'MACs' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_178
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.12
+   - debug:
+      var: audit_178.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.12
+   
+   - name: "CHECK | SCORED | 5.2.13 | PATCH | Ensure SSH Idle Timeout Interval is configured | ClientAliveInterval"
+     shell: "grep '^ClientAliveInterval' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_179
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.13
+   - debug:
+      var: audit_179.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.13
+
+   - name: "CHECK | SCORED | 5.2.13 | PATCH | Ensure SSH Idle Timeout Interval is configured | ClientAliveCountMax"
+     shell: "grep '^ClientAliveCountMax' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_180
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.13
+   - debug:
+      var: audit_180.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.13
+   
+   - name: "CHECK | SCORED | 5.2.14 | PATCH | Ensure SSH LoginGraceTime is set to one minute or less"
+     shell: "grep '^LoginGraceTime' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_181
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.14
+   - debug:
+      var: audit_181.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.14
+   
+   - name: "CHECK | SCORED | 5.2.15 | PATCH | Ensure SSH access is limited | AllowUsers"
+     shell: "grep '^AllowUsers' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_182
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   - debug:
+      var: audit_182.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   
+   - name: "CHECK | SCORED | 5.2.15 | PATCH | Ensure SSH access is limited | AllowGroups"
+     shell: "grep '^AllowGroups' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_183
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   - debug:
+      var: audit_183.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+
+   - name: "CHECK | SCORED | 5.2.15 | PATCH | Ensure SSH access is limited | DenyUsers"
+     shell: "grep '^DenyUsers' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_184
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   - debug:
+      var: audit_184.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+
+   - name: "CHECK | SCORED | 5.2.15 | PATCH | Ensure SSH access is limited | DenyGroups"
+     shell: "grep '^DenyGroups' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_185
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   - debug:
+      var: audit_185.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.15
+   
+   - name: "CHECK | SCORED | 5.2.16 | PATCH | Ensure SSH warning banner is configured"
+     shell: "grep '^Banner' /etc/ssh/sshd_config"
+     ignore_errors: yes
+     register: audit_186
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.16
+   - debug:
+      var: audit_186.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.2.16
+
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | pam_pwquality.so"
+     shell: "grep 'pam_pwquality.so' /etc/pam.d/password-auth"
+     ignore_errors: yes
+     register: audit_187
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_187.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | pam_pwquality.so"
+     shell: "grep 'pam_pwquality.so' /etc/pam.d/system-auth"
+     ignore_errors: yes
+     register: audit_188
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_188.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | minlen"
+     shell: "grep '^minlen' /etc/security/pwquality.conf"
+     ignore_errors: yes
+     register: audit_189
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_189.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | dcredit"
+     shell: "grep '^dcredit' /etc/security/pwquality.conf"
+     ignore_errors: yes
+     register: audit_190
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_190.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | lcredit"
+     shell: "grep '^lcredit' /etc/security/pwquality.conf"
+     ignore_errors: yes
+     register: audit_191
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_191.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | ocredit"
+     shell: "grep '^ocredit' /etc/security/pwquality.conf"
+     ignore_errors: yes
+     register: audit_192
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_192.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+
+   - name: "CHECK | SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured | ucredit"
+     shell: "grep '^ucredit' /etc/security/pwquality.conf"
+     ignore_errors: yes
+     register: audit_193
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+   - debug:
+      var: audit_193.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.1
+
+   - name: "CHECK | SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
+     shell: "egrep 'password    sufficient    pam_unix.so' /etc/pam.d/password-auth"
+     ignore_errors: yes
+     register: audit_194
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.4
+   - debug:
+      var: audit_194.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.4
+   
+   - name: "CHECK | SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
+     shell: "egrep 'password    sufficient    pam_unix.so' /etc/pam.d/system-auth"
+     ignore_errors: yes
+     register: audit_195
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.4
+   - debug:
+      var: audit_195.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.3.4
+   
+   - name: "CHECK | SCORED | 5.4.1.1 | PATCH | Ensure password expiration is 90 days or less"
+     shell: "grep PASS_MAX_DAYS /etc/login.defs"
+     ignore_errors: yes
+     register: audit_196
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.1
+   - debug:
+      var: audit_196.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.1
+   
+   - name: "CHECK | SCORED | 5.4.1.2 | PATCH | Ensure minimum days between password changes is 7 or more"
+     shell: "grep PASS_MIN_DAYS /etc/login.defs"
+     ignore_errors: yes
+     register: audit_197
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.2
+   - debug:
+      var: audit_197.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.2
+   
+   - name: "CHECK | SCORED | 5.4.1.3 | PATCH | Ensure password expiration warning days is 7 or more"
+     shell: "grep PASS_WARN_AGE /etc/login.defs"
+     ignore_errors: yes
+     register: audit_198
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.3
+   - debug:
+      var: audit_198.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.1.3
+   
+   - name: "CHECK | SCORED | 5.4.3 | PATCH | Ensure default group for the root account is GID 0"
+     shell: "grep '^root:' /etc/passwd | cut -f4 -d:"
+     ignore_errors: yes
+     register: audit_199
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.3
+   - debug:
+      var: audit_199.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.3
+   
+   - name: "CHECK | SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive"
+     shell: "grep 'umask 027' /etc/bashrc"
+     ignore_errors: yes
+     register: audit_200
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.4
+   - debug:
+      var: audit_200.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.4
+   
+   - name: "CHECK | SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive"
+     shell: "grep 'umask 027' /etc/profile"
+     ignore_errors: yes
+     register: audit_201
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.4
+   - debug:
+      var: audit_201.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.4.4
+   
+   - name: "CHECK | SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
+     shell: "grep pam_wheel.so /etc/pam.d/su"
+     ignore_errors: yes
+     register: audit_202
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.6
+   - debug:
+      var: audit_202.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.6
+   
+   - name: "CHECK | SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
+     shell: "grep wheel /etc/group"
+     ignore_errors: yes
+     register: audit_203
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.6
+   - debug:
+      var: audit_203.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_5.6
+   
+   - name: "CHECK | SCORED | 6.1.2 | PATCH | Ensure permissions on /etc/passwd are configured"
+     shell: "stat /etc/passwd | grep root"
+     ignore_errors: yes
+     register: audit_204
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.2
+   - debug:
+      var: audit_204.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.2
+   
+   - name: "CHECK | SCORED | 6.1.3 | PATCH | Ensure permissions on /etc/shadow are configured"
+     shell: "stat /etc/shadow | grep root"
+     ignore_errors: yes
+     register: audit_205
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.3
+   - debug:
+      var: audit_205.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.3
+   
+   - name: "CHECK | SCORED | 6.1.4 | PATCH | Ensure permissions on /etc/group are configured"
+     shell: "stat /etc/group | grep root"
+     ignore_errors: yes
+     register: audit_206
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.4
+   - debug:
+      var: audit_206.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.4
+   
+   - name: "CHECK | SCORED | 6.1.5 | PATCH | Ensure permissions on /etc/gshadow are configured"
+     shell: "stat /etc/gshadow | grep root"
+     ignore_errors: yes
+     register: audit_207
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.5
+   - debug:
+      var: audit_207.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.5
+
+   - name: "CHECK | SCORED | 6.1.6 | PATCH | Ensure permissions on /etc/passwd- are configured"
+     shell: "stat /etc/passwd- | grep root"
+     ignore_errors: yes
+     register: audit_208
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.6
+   - debug:
+      var: audit_208.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.6
+
+   - name: "CHECK | SCORED | 6.1.7 | PATCH | Ensure permissions on /etc/shadow- are configured"
+     shell: "stat /etc/shadow- | grep root"
+     ignore_errors: yes
+     register: audit_209
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.7
+   - debug:
+      var: audit_209.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.7
+   
+   - name: "CHECK | SCORED | 6.1.8 | PATCH | Ensure permissions on /etc/group- are configured"
+     shell: "stat /etc/group- | grep root"
+     ignore_errors: yes
+     register: audit_210
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.8
+   - debug:
+      var: audit_210.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.8
+   
+   - name: "CHECK | SCORED | 6.1.9 | PATCH | Ensure permissions on /etc/gshadow- are configured"
+     shell: "stat /etc/gshadow- | grep root"
+     ignore_errors: yes
+     register: audit_211
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.9
+   - debug:
+      var: audit_211.stdout_lines
+     ignore_errors: yes
+     tags:
+      - level1
+      - scored
+      - patch
+      - rule_6.1.9
